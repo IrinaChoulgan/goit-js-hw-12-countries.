@@ -1,9 +1,10 @@
 import './sass/main.scss';
 var debounce = require('lodash.debounce');
 
-import { alert, defaultModules } from  '../node_modules/@pnotify/core/dist/PNotify.js';
+import { alert, error, defaultModules } from  '../node_modules/@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
 import '@pnotify/core/dist/BrightTheme.css';
+
 
 
 
@@ -22,7 +23,7 @@ const handlerInput = (e) => {
     .then(country => {
         if (country.length > 10) {
             defaultModules.set(PNotifyMobile, {});
-            alert({
+            error({
                 text: 'Too many matches found. Please enter a more specific query.'
             });
         };
@@ -42,7 +43,7 @@ const handlerInput = (e) => {
     .catch(err => {
         clearContent ()
         defaultModules.set(PNotifyMobile, {});
-    alert({
+        error({
         text: '404 Not found'
     });})
 }
