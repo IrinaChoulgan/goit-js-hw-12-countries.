@@ -1,8 +1,8 @@
 import './sass/main.scss';
 var debounce = require('lodash.debounce');
+
 import { alert, defaultModules } from  '../node_modules/@pnotify/core/dist/PNotify.js';
 import * as PNotifyMobile from '../node_modules/@pnotify/mobile/dist/PNotifyMobile.js';
-//import '@pnotify/core/dist/Material.css';
 import '@pnotify/core/dist/BrightTheme.css';
 
 
@@ -32,22 +32,49 @@ const handlerInput = (e) => {
         if (country.length === 1) {
             renderCountry(country);
         }
-//     if (data.length > 10) {
-//         error({
-//         text: "Too many matches found. Please enter a more specific query!"
-//     });    
-//  } else if (country.length > 1) {
-//         renderCountry(country, createCountry);
-//     } 
-//     else if (country.length <= 10) {
-//         renderCountriesCollection(country, createCountriesCollection);
-//     }
-
-        // renderCountry(country);
-        // console.log(country.length)
   })
     .catch(err => {console.log(err)})
 }
 
 refs.form.addEventListener('input', debounce(handlerInput, 500));
 
+
+function createCountry (obj) {
+const article =  ` 
+<article class ="country">
+<h1 class ="country-name"><b>${obj.name}</b></h1>
+<div class ="country-container">
+  <div class ="country-info">
+  <p> <b>Capital:</b> ${obj.capital}</p>
+  <p> <b>Population:</b> ${obj.population}</p>
+<ul > <b>Languages:</b>
+  <li> ${obj.languages.map(languag =>languag.name)}</li>
+</ul>
+</div>
+<div class ="country-flag">
+  <img src ="${obj.flag}" alt ="${obj.demonym}" width = "300px">
+</div>
+</div>
+</article>
+`
+refs.container.insertAdjacentHTML('beforeend', article)
+}
+
+function renderCountry (arr) {
+    arr.forEach(el => createCountry(el))
+}
+
+function createCountriesCollection (obj) {
+  const article = `
+  <li class="countries-collection">${obj.name}</li>
+  `
+  refs.container.insertAdjacentHTML('beforeend', article)
+}
+
+function renderCountriesCollection (arr) {
+    arr.forEach(el => createCountriesCollection(el))
+}
+
+function clearCountriesContainer () {
+    refs.container.innerHTML = '';
+}
