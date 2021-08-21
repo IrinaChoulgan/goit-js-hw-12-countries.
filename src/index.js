@@ -33,7 +33,12 @@ const handlerInput = (e) => {
             renderCountry(country);
         }
   })
-    .catch(err => {console.log(err)})
+    .catch(err => {
+        clearCountriesContainer ()
+        defaultModules.set(PNotifyMobile, {});
+    alert({
+        text: '404 Not found'
+    });})
 }
 
 refs.form.addEventListener('input', debounce(handlerInput, 500));
