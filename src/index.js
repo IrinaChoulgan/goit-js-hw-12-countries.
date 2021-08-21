@@ -32,6 +32,11 @@ const handlerInput = (e) => {
         if (country.length === 1) {
             renderCountry(country);
         }
+        if (country.status === 404) {
+            error({
+                text: "No country has been found. Please enter a more specific query!"})
+        }
+        
   })
     .catch(err => {
         clearCountriesContainer ()
