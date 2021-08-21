@@ -33,13 +33,14 @@ const handlerInput = (e) => {
             renderCountry(country);
         }
         if (country.status === 404) {
+            clearContent ()
             error({
-                text: "No country has been found. Please enter a more specific query!"})
+                text: "404 Not found"})
         }
         
   })
     .catch(err => {
-        clearCountriesContainer ()
+        clearContent ()
         defaultModules.set(PNotifyMobile, {});
     alert({
         text: '404 Not found'
@@ -88,3 +89,7 @@ function renderCountriesCollection (arr) {
 function clearCountriesContainer () {
     refs.container.innerHTML = '';
 }
+
+function clearContent(){
+    refs.input.value = ''; 
+  }
